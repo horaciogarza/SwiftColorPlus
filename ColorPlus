@@ -1,0 +1,61 @@
+//  Write some awesome Swift code, or import libraries like "Foundation",
+//  "Dispatch", or "Glibc"
+import Foundation
+
+class ColorPlus{
+    
+    private var defaultColors = [String:String]()
+    private var defaultColorsKeys:[String]?
+    
+    init(){
+    
+        defaultColors["Red"] = "#F44336"
+        defaultColors["Pink"] = "#EC407A"
+        defaultColors["Purple"] = "#9C27B0"
+        defaultColors["Blue"] = "#3F51B5"
+        defaultColors["Green"] = "#4CAF50"
+        defaultColors["Yellow"] = "#FFEB3B"
+        defaultColors["Orange"] = "#FF9800"
+        defaultColors["Brown"] = "#795548"
+
+
+        defaultColorsKeys = Array(defaultColors.keys)
+        
+    }
+    
+    
+    func getRandomColor() -> (String, String){
+    
+        var randomIndex:Int?
+        
+        #if os(Linux)
+            randomIndex = Int(random() % (defaultColorsKeys!.count))
+        #else
+            randomIndex = Int(arc4random_uniform(UInt32(defaultColorsKeys.count)))
+        #endif
+        
+        
+        
+        let name:String = defaultColorsKeys![randomIndex!]
+        let colorHexValue:String = defaultColors[name]!
+        
+        
+        
+        let color = (name, colorHexValue)
+        return color
+    }
+    
+    func addColor(name:String, hexCode:String) {
+    
+		defaultColors[name] = hexCode
+		
+	}
+    
+    
+    
+}
+
+
+let color = ColorPlus()
+
+print(color.getRandomColor())
